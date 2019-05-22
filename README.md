@@ -1,23 +1,23 @@
 # esx_phone
 
-### Note
-- All scripts that implement the usage of esx phone must be started **after** this script, or else they wont register and no messages will be received.
+### nota
+- Todos os scripts que implementam o uso do esx phone devem ser iniciados **após** este script, senão eles serão registrados e nenhuma mensagem será recebida.
 
 ## Download & Installation
 
 ### Using [fvm](https://github.com/qlaffont/fvm-installer)
 ```
-fvm install --save --folder=esx esx-org/esx_phone
+fvm install --save --folder=esx ESX-Brasil/esx_phone
 ```
 
 ### Using Git
 ```
 cd resources
-git clone https://github.com/ESX-Org/esx_phone [esx]/esx_phone
+git clone https://github.com/ESX-Brasil/esx_phone [esx]/esx_phone
 ```
 
 ### Manually
-- Download https://github.com/ESX-Org/esx_phone/archive/master.zip
+- Download https://github.com/ESX-Brasil/esx_phone/archive/master.zip
 - Put it in the `[esx]` directory
 
 - Import `esx_phone.sql` in your database
@@ -27,16 +27,16 @@ git clone https://github.com/ESX-Org/esx_phone [esx]/esx_phone
 start esx_phone
 ```
 
-### Add custom contacts
+### Adicionar contatos personalizados
 
-Client side
+Lado do cliente
 
 ```lua
 RegisterNetEvent('esx_phone:loaded')
 AddEventHandler('esx_phone:loaded', function(phoneNumber, contacts)
 	local specialContact = {
-		name       = 'societyName',
-		number     = 'societyNumber',
+		name       = 'sociedade nome',
+		number     = 'número da sociedade',
 		base64Icon = 'insert base 64 icon'
 	}
 
@@ -44,16 +44,16 @@ AddEventHandler('esx_phone:loaded', function(phoneNumber, contacts)
 end)
 ```
 
-Server side
+Lado do servidor
 
 ```lua
 TriggerServerEvent('esx_phone:registerNumber', number, type, sharePos, hasDispatch, hideNumber, hidePosIfAnon)
 
-example
+exemplo
 
 TriggerEvent('esx_phone:registerNumber', 'ambulance', _U('alert_ambulance'), true, true)
 
-last two booleans are optional
+os últimos dois booleanos são opcionais
 ```
 
 # Legal
