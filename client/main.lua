@@ -28,7 +28,7 @@ Citizen.CreateThread(function()
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
 	end
-	
+
 	ESX.UI.Menu.RegisterType('phone', OpenPhone, ClosePhone)
 end)
 
@@ -188,7 +188,7 @@ AddEventHandler('esx_phone:onMessage', function(phoneNumber, message, position, 
 			anonyme     = anon,
 			job         = job
 		}
-		
+
 		ESX.SetTimeout(15000, function()
 			CurrentAction = nil
 		end)
@@ -231,7 +231,7 @@ RegisterNUICallback('send', function(data)
 		y = coords.y,
 		z = coords.z
 	})
-	
+
 	SendNUIMessage({
 		showMessageEditor = false
 	})
@@ -269,7 +269,7 @@ Citizen.CreateThread(function()
 		else
 			-- open phone
 			-- todo: is player busy (handcuffed, etc)
-			if IsControlJustReleased(0, Keys['F1']) and GetLastInputMethod(2) then
+			if IsControlJustReleased(0, Keys['F1']) and IsInputDisabled(0) then
 				if not ESX.UI.Menu.IsOpen('phone', GetCurrentResourceName(), 'main') then
 					ESX.UI.Menu.CloseAll()
 					ESX.UI.Menu.Open('phone', GetCurrentResourceName(), 'main')
@@ -295,7 +295,7 @@ Citizen.CreateThread(function()
 		if CurrentAction ~= nil then
 			ESX.ShowHelpNotification(CurrentActionMsg)
 
-			if IsControlJustReleased(0, Keys['E']) and GetLastInputMethod(2) then
+			if IsControlJustReleased(0, Keys['E']) and IsInputDisabled(0) then
 				if CurrentAction == 'dispatch' then
 					TriggerServerEvent('esx_phone:stopDispatch', CurrentDispatchRequestId)
 					SetNewWaypoint(CurrentActionData.position.x, CurrentActionData.position.y)
