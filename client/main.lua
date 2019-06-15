@@ -1,3 +1,5 @@
+--ESX-Brasil
+
 local GUI, PhoneData, CurrentActionData, PhoneNumberSources, CurrentDispatchRequestId = {}, {phoneNumber = 0, contacts = {}}, {}, {}, -1
 local CurrentAction, CurrentActionMsg
 GUI.PhoneIsShowed = false

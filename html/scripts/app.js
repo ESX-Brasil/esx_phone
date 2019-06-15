@@ -377,7 +377,7 @@
 
 	});
 
-	// ACTIONS BTNS
+	// ACÇÕES BTNS
 	$('#btn-head-back-msg').click(function() {
 		hideNewMessage();
 		hideMessages();
