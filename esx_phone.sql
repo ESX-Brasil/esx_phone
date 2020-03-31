@@ -1,5 +1,3 @@
-USE `essentialmode`;
-
 CREATE TABLE `user_contacts` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`identifier` VARCHAR(22) NOT NULL,
