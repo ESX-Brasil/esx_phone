@@ -1,6 +1,6 @@
 (function(){
-
-	let ContactTpl =
+	
+	let ContactTpl = 
 		'<div class="contact {{online}}">' +
 			'<div class="sender-info">' +
 				'<div class="center">' +
@@ -13,15 +13,15 @@
 			'</div>' +
 		'</div>'
 	;
-
-	let MessageTpl =
+	
+	let MessageTpl = 
 		'<div class="message">' +
 			'<div class="sender-info">' +
 				'<div class="center">' +
 					'<span class="sender">{{sender}}</span><br/><span class="phone-number">#{{phoneNumber}}</span>' +
-				'</div>' +
-			'</div>' +
-			'<div class="body">{{message}}</div>' +
+				'</div>' + 
+			'</div>' + 
+			'<div class="body">{{message}}</div>' + 
 			'<div class="actions"><span class="new-msg {{anonyme}} reply-btn" data-contact-number="{{phoneNumberData}}" data-contact-name="{{senderData}}"></span><span class="gps {{activeGPS}} gps-btn" data-gpsX="{{gpsLocationX}}" data-gpsY="{{gpsLocationY}}"></span><span class="ok-btn {{showOK}}" data-contact-number="{{okNumberData}}" data-contact-job="{{jobData}}"></span></div>' +
 		'</div>'
 	;
@@ -36,20 +36,20 @@
 	let isMessageEditorOpen = false;
 	let isMessagesOpen      = false;
 	let isPhoneShowed       = false;
-
+	
 	let showMain = function() {
 		$('.screen').removeClass('active');
 		$('.screen *').attr('disabled', 'disabled');
 	}
-
+	
 	let showRepertoire = function() {
 		$('#repertoire').addClass('active');
 	}
-
+	
 	let hideRepertoire = function() {
 		$('#repertoire').removeClass('active');
 	}
-
+	
 	let showMessages = function(){
 		$('#messages').addClass('active');
 		isMessagesOpen = true;
@@ -59,19 +59,19 @@
 		$('#messages').removeClass('active');
 		isMessagesOpen = false;
 	}
-
+	
 	let showAddContact = function() {
 		$('#contact').addClass('active');
 		$('.screen *').attr('disabled', 'disabled');
 		$('.screen.active *').removeAttr('disabled');
 	}
-
+	
 	let hideAddContact = function() {
 		$('#contact').removeClass('active');
 		$('#contact_name').val('');
 		$('#contact_number').val('');
 	}
-
+	
 	let showNewMessage = function(cnum, cname) {
 		$('#writer').addClass('active');
 		$('#writer_number').val(cnum);
@@ -86,7 +86,7 @@
 		$('#writer_message').val('');
 		$('#writer .header-title').html('');
 	}
-
+	
 	let showGPS = function(xPos, yPos) {
 		$.post('http://esx_phone/setGPS', JSON.stringify({
 			x: parseFloat(xPos),
@@ -96,13 +96,13 @@
 	}
 
 	let renderContacts = function(){
-
+		
 		let contactHTML = '';
-
+		
 		if(contacts.length > 0) {
 
 			for(let i=0; i<contacts.length; i++) {
-
+				
 				let view = {
 					phoneNumber    : contacts[i].value,
 					sender         : contacts[i].label,
@@ -118,9 +118,9 @@
 			}
 
 		} else {
-			contactHTML = '<div class="contact no-item online"><p class="no-item">Sem contatos</p></div>';
+			contactHTML = '<div class="contact no-item online"><p class="no-item">Aucun contact</p></div>';
 		}
-
+		
 		$('#phone #repertoire .repertoire-list').html(contactHTML);
 
 		$('.contact .del-contact').click(function() {
@@ -132,13 +132,13 @@
 				phoneNumber: phoneNumber
 			}))
 		});
-
+	
 		$('.contact.online .new-msg').click(function() {
 			showNewMessage($(this).attr('data-contact-number'), $(this).attr('data-contact-name'));
 		});
-
+		
 	}
-
+	
 	$('.contact.online .new-msg').click(function() {
 		showNewMessage($(this).attr('data-contact-number'));
 	});
@@ -171,11 +171,11 @@
 		$('#phone').hide();
 		isPhoneShowed = false;
 	}
-
+	
 	let messages = [];
 
 	let addMessage = function(phoneNumber, pmessage, pposition, panonyme, pjob){
-
+		
 		messages.push({
 			value   : phoneNumber,
 			message : pmessage,
@@ -185,24 +185,24 @@
 		})
 
 		let messageHTML = '';
-
+		
 		if(messages.length >  0) {
-
+			
 			for(let i=0; i<messages.length; i++) {
 
-				let fromName   = "Desconhecido";
+				let fromName   = "Inconnu";
 				let fromNumber = messages[i].value;
 				let anonyme    = null;
-
+				
 				if(messages[i].job != "player")
 					fromName = messages[i].job;
 
 				if(messages[i].anonyme) {
-
+					
 					if(messages[i].job == "player")
-						fromName = "Anônimo";
+						fromName = "Anonyme";
 
-					fromNumber = "Anonymous";
+					fromNumber = "Anonyme";
 					anonyme    = 'anonyme';
 
 				} else {
@@ -214,7 +214,7 @@
 
 					anonyme = '';
 				}
-
+				
 				let view = {
 					anonyme        : anonyme,
 					phoneNumber    : fromNumber,
@@ -229,28 +229,28 @@
 					jobData        : (messages[i].job == 'player') ? '' : messages[i].job,
 					showOK         : (messages[i].job == 'player') ? '' : 'showOK'
 				}
-
+				
 				let html = Mustache.render(MessageTpl, view);
 
 				messageHTML = html + messageHTML;
 			}
 		} else {
-			messageHTML = '<div class="message no-item"><p class="no-item">Sem mensagens</p></div>';
+			messageHTML = '<div class="message no-item"><p class="no-item">Aucun messages</p></div>';
 		}
-
+		
 		$('#phone #messages .messages-list').html(messageHTML);
-
+		
 		$('.message .new-msg').click(function() {
 			showNewMessage($(this).attr('data-contact-number'), $(this).attr('data-contact-name'));
 		});
-
+		
 		$('.message .gps').click(function() {
 			showGPS($(this).attr('data-gpsX'), $(this).attr('data-gpsY'));
 		});
-
+		
 		$('.message .ok-btn').click(function() {
 			$.post('http://esx_phone/send', JSON.stringify({
-				message: $(this).attr('data-contact-job') + ": Recebido!",
+				message: $(this).attr('data-contact-job') + ": Bien reçu !",
 				number : $(this).attr('data-contact-number'),
 				anonyme: false
 			}))
@@ -269,7 +269,7 @@
 	}
 
 	let addSpecialContact = function(name, number, base64Icon){
-
+		
 		let found = false
 
 		for(let i=0; i<specialContacts.length; i++)
@@ -312,8 +312,8 @@
 		$('.phone-icon').unbind('click');
 
 		$('#phone .menu .home').html(
-			'<li class="phone-icon" id="phone-icon-rep">Contatos</li>' +
-			'<li class="phone-icon" id="phone-icon-msg">Mensagens</li>'
+			'<li class="phone-icon" id="phone-icon-rep">Repertoire</li>' +
+			'<li class="phone-icon" id="phone-icon-msg">Messages</li>'
 		);
 
 		for(let i=0; i<specialContacts.length; i++){
@@ -338,7 +338,7 @@
 				}
 
 				default : {
-
+					
 					let number = $(this).data('number');
 					let name   = $(this).data('name');
 
@@ -352,9 +352,9 @@
 	}
 
 	$('#writer_send').click(function(){
-
+		
 		let phoneNumber = null
-
+		
 		if(typeof $('#writer_number').val() == 'number')
 			phoneNumber = parseInt($('#writer_number').val());
 		else if (typeof $('#writer_number').val() == 'string')
@@ -377,28 +377,28 @@
 
 	});
 
-	// ACÇÕES BTNS
+	// ACTIONS BTNS
 	$('#btn-head-back-msg').click(function() {
 		hideNewMessage();
 		hideMessages();
 	});
-
+	
 	$('#btn-head-back-rep').click(function() {
 		hideRepertoire();
 	});
-
+	
 	$('#btn-head-back-writer, #writer_cancel').click(function() {
 		hideNewMessage();
 	});
-
+	
 	$('#btn-head-back-contact, #contact_cancel').click(function() {
 		hideAddContact();
 	});
-
+	
 	$('#btn-head-new-message').click(function() {
-		showNewMessage('', 'Nova mensagem');
+		showNewMessage('', 'Nouveau message');
 	});
-
+	
 	$('#btn-head-new-contact').click(function() {
 		showAddContact();
 	});
@@ -420,7 +420,7 @@
 			}
 
 			default : {
-
+				
 				let number = $(this).data('number');
 				let name   = $(this).data('name');
 

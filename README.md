@@ -1,23 +1,23 @@
 # esx_phone
 
-### nota
-- Todos os scripts que implementam o uso do esx phone devem ser iniciados **após** este script, senão eles serão registrados e nenhuma mensagem será recebida.
+### Note
+- All scripts that implement the usage of esx phone must be started **after** this script, or else they wont register and no messages will be received.
 
 ## Download & Installation
 
 ### Using [fvm](https://github.com/qlaffont/fvm-installer)
 ```
-fvm install --save --folder=esx ESX-Brasil/esx_phone
+fvm install --save --folder=esx esx-org/esx_phone
 ```
 
 ### Using Git
 ```
 cd resources
-git clone https://github.com/ESX-Brasil/esx_phone [esx]/esx_phone
+git clone https://github.com/ESX-Org/esx_phone [esx]/esx_phone
 ```
 
 ### Manually
-- Download https://github.com/ESX-Brasil/esx_phone/archive/master.zip
+- Download https://github.com/ESX-Org/esx_phone/archive/master.zip
 - Put it in the `[esx]` directory
 
 - Import `esx_phone.sql` in your database
@@ -27,16 +27,16 @@ git clone https://github.com/ESX-Brasil/esx_phone [esx]/esx_phone
 start esx_phone
 ```
 
-### Adicionar contatos personalizados
+### Add custom contacts
 
-Lado do cliente
+Client side
 
 ```lua
 RegisterNetEvent('esx_phone:loaded')
 AddEventHandler('esx_phone:loaded', function(phoneNumber, contacts)
 	local specialContact = {
-		name       = 'sociedade nome',
-		number     = 'número da sociedade',
+		name       = 'societyName',
+		number     = 'societyNumber',
 		base64Icon = 'insert base 64 icon'
 	}
 
@@ -44,23 +44,23 @@ AddEventHandler('esx_phone:loaded', function(phoneNumber, contacts)
 end)
 ```
 
-Lado do servidor
+Server side
 
 ```lua
 TriggerServerEvent('esx_phone:registerNumber', number, type, sharePos, hasDispatch, hideNumber, hidePosIfAnon)
 
-exemplo
+example
 
 TriggerEvent('esx_phone:registerNumber', 'ambulance', _U('alert_ambulance'), true, true)
 
-os últimos dois booleanos são opcionais
+last two booleans are optional
 ```
 
 # Legal
 ### License
 esx_phone - phone script for fivem
 
-Copyright (C) 2015-2019 ESX-Brasil
+Copyright (C) 2015-2019 Jérémie N'gadi
 
 This program Is free software: you can redistribute it And/Or modify it under the terms Of the GNU General Public License As published by the Free Software Foundation, either version 3 Of the License, Or (at your option) any later version.
 

@@ -15,7 +15,7 @@ function LoadPlayer(source)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	for num,v in pairs(PhoneNumbers) do
-		if tonumber(num) == num then -- se o número de telefone for um número de telefone do jogador
+		if tonumber(num) == num then -- if phonenumber is a player phone number
 			for src,_ in pairs(v.sources) do
 				TriggerClientEvent('esx_phone:setPhoneNumberSource', source, num, tonumber(src))
 			end
@@ -216,7 +216,7 @@ AddEventHandler('esx_phone:addPlayerContact', function(phoneNumber, contactName)
 			else
 				local contacts  = xPlayer.get('contacts')
 
-				-- jogador já adicionado?
+				-- already added player?
 				for i=1, #contacts, 1 do
 					if contacts[i].number == phoneNumber then
 						TriggerClientEvent('esx:showNotification', playerId, _U('number_in_contacts'))
@@ -231,7 +231,7 @@ AddEventHandler('esx_phone:addPlayerContact', function(phoneNumber, contactName)
 
 				xPlayer.set('contacts', contacts)
 
-				-- o jogador está online no momento?
+				-- is the player currently online?
 				local xTarget = ESX.GetPlayerFromIdentifier(result[1].identifier)
 				playerOnline = xTarget ~= nil
 
